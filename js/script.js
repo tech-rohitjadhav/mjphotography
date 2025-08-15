@@ -5,13 +5,58 @@ const navMenu = document.querySelector('.nav-menu');
 hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
+    
+    // Animate hamburger bars
+    const bars = hamburger.querySelectorAll('.bar');
+    bars.forEach((bar, index) => {
+        if (hamburger.classList.contains('active')) {
+            if (index === 0) bar.style.transform = 'rotate(45deg) translate(5px, 5px)';
+            if (index === 1) bar.style.opacity = '0';
+            if (index === 2) bar.style.transform = 'rotate(-45deg) translate(7px, -6px)';
+        } else {
+            bar.style.transform = 'none';
+            bar.style.opacity = '1';
+        }
+    });
 });
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
-}));
+    
+    // Reset hamburger bars
+    const bars = hamburger.querySelectorAll('.bar');
+    bars.forEach(bar => {
+        bar.style.transform = 'none';
+        bar.style.opacity = '1';
+    });
+});
+
+// Add active state to current section
+function updateActiveNavLink() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.pageYOffset >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// Update active link on scroll
+window.addEventListener('scroll', updateActiveNavLink);
 
 // Portfolio Filtering with enhanced animations
 const filterButtons = document.querySelectorAll('.filter-btn');
