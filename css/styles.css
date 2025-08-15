@@ -334,7 +334,12 @@ p {
     margin-bottom: 1.5rem;
     animation: slideInUp 1s ease, title3D 4s ease-in-out infinite;
     transform-style: preserve-3d;
-    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    /* Warm near-white gradient for better readability on dark hero */
+    background: linear-gradient(135deg, #ffffff 0%, #f6efe9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero-subtitle {
